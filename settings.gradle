@@ -1,0 +1,2 @@
+rootProject.name = 'moviedb_51'
+include ':app'
