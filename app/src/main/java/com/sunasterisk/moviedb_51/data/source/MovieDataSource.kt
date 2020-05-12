@@ -2,7 +2,6 @@ package com.sunasterisk.moviedb_51.data.source
 
 import com.sunasterisk.moviedb_51.data.source.remote.response.GenresResponse
 import com.sunasterisk.moviedb_51.data.source.remote.response.MoviesResponse
-import io.reactivex.Flowable
 import io.reactivex.Observable
 
 interface MovieDataSource {
@@ -10,7 +9,6 @@ interface MovieDataSource {
      * Local
      */
     interface Local {
-        fun getCategoriesLocal(): Flowable<List<String>>
     }
 
     /**

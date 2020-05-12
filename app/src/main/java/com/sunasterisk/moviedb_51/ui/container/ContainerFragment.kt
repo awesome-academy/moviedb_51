@@ -40,11 +40,11 @@ class ContainerFragment : Fragment(), BottomNavigationView.OnNavigationItemSelec
     override fun onNavigationItemSelected(item: MenuItem) =
         when (item.itemId) {
             R.id.home -> {
-                binding.containerViewPaper.currentItem = Constant.POSITION_HOME_NAVIGATE
+                binding.containerViewPaper.currentItem = POSITION_HOME_NAVIGATE
                 true
             }
             R.id.favorite -> {
-                binding.containerViewPaper.currentItem = Constant.POSITION_FAVORITE_NAVIGATE
+                binding.containerViewPaper.currentItem = POSITION_FAVORITE_NAVIGATE
                 true
             }
             else -> false
@@ -58,7 +58,7 @@ class ContainerFragment : Fragment(), BottomNavigationView.OnNavigationItemSelec
     }
 
     override fun onPageSelected(position: Int) {
-        if (position == Constant.POSITION_HOME_NAVIGATE)
+        if (position == POSITION_HOME_NAVIGATE)
             binding.bottomNavigation.menu.findItem(R.id.home).isChecked = true
         else binding.bottomNavigation.menu.findItem(R.id.favorite).isChecked = true
     }
@@ -74,6 +74,10 @@ class ContainerFragment : Fragment(), BottomNavigationView.OnNavigationItemSelec
     }
 
     companion object {
+        const val COUNT_FRAGMENT_NAVIGATE = 2
+        const val POSITION_HOME_NAVIGATE = 0
+        const val POSITION_FAVORITE_NAVIGATE = 1
+        
         fun newInstance() = ContainerFragment()
     }
 }

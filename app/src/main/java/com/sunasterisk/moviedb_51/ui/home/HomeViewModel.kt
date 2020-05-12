@@ -3,45 +3,42 @@ package com.sunasterisk.moviedb_51.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.sunasterisk.moviedb_51.data.model.Movie
 import com.sunasterisk.moviedb_51.data.repository.MovieRepository
 import com.sunasterisk.moviedb_51.data.source.remote.response.BaseResponse
 import com.sunasterisk.moviedb_51.data.source.remote.response.GenresResponse
 import com.sunasterisk.moviedb_51.data.source.remote.response.MoviesResponse
+import com.sunasterisk.moviedb_51.utils.MoviesTypes
 import com.sunasterisk.moviedb_51.utils.Status
-import com.sunasterisk.moviedb_51.utils.Types
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
-    private var _moviesResponse = MutableLiveData<MoviesResponse>()
+    private var _movies = MutableLiveData<List<Movie>>()
     private var _genresResponse = MutableLiveData<GenresResponse>()
-    private var _categoriesResponse = MutableLiveData<List<String>>()
     private var _isAllLoaded = MutableLiveData<Boolean>()
     private var _messageError = MutableLiveData<String>()
     private var isLoadedMoviesResponse = false
     private var isLoadedGenresResponse = false
-    private var isLoadedCategoriesResponse = false
-    val moviesResponse: LiveData<MoviesResponse> get() = _moviesResponse
+    val movies: LiveData<List<Movie>> get() = _movies
     val genresResponse: LiveData<GenresResponse> get() = _genresResponse
-    val categoriesResponse: LiveData<List<String>> get() = _categoriesResponse
     val isAllLoaded: LiveData<Boolean> get() = _isAllLoaded
     val messageError: LiveData<String> get() = _messageError
 
     fun onStart() {
-        getCategories()
         getGenres()
     }
 
-    fun getMovies(type: Types) = repository.getMovies(type.data)
+    fun getMovies(type: MoviesTypes) = repository.getMovies(type.value)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doOnSubscribe { _ ->
-            handleData(type, BaseResponse.loading<MoviesResponse>())
+            handleData(type.value, BaseResponse.loading<MoviesResponse>())
         }
         .subscribe({ data ->
-            handleData(type, BaseResponse.success(data))
+            handleData(type.value, BaseResponse.success(data))
         }, { throwable ->
-            handleData(type, BaseResponse.error<MoviesResponse>(throwable.message))
+            handleData(type.value, BaseResponse.error<MoviesResponse>(throwable.message))
         })
 
 
@@ -49,45 +46,35 @@ class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doOnSubscribe { _ ->
-            handleData(Types.GENRES, BaseResponse.loading<GenresResponse>())
+            handleData(MoviesTypes.GENRES.value, BaseResponse.loading<GenresResponse>())
         }.subscribe({ data ->
-            handleData(Types.GENRES, BaseResponse.success(data))
+            handleData(MoviesTypes.GENRES.value, BaseResponse.success(data))
         }, { throwable ->
-            handleData(Types.GENRES, BaseResponse.error<GenresResponse>(throwable.message))
+            handleData(
+                MoviesTypes.GENRES.value,
+                BaseResponse.error<GenresResponse>(throwable.message)
+            )
         })
 
+    private fun isAllLoaded() = isLoadedGenresResponse && isLoadedMoviesResponse
 
-    private fun getCategories() = repository.getCategories()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnSubscribe { _ ->
-            handleData(Types.CATEGORIES, BaseResponse.loading<List<String>>())
-        }.subscribe({ data ->
-            handleData(Types.CATEGORIES, BaseResponse.success(data))
-        }, { throwable ->
-            handleData(Types.CATEGORIES, BaseResponse.error<List<String>>(throwable.message))
-        })
-
-    private fun isAllLoaded() =
-        isLoadedCategoriesResponse && isLoadedGenresResponse && isLoadedMoviesResponse
-
-    private fun <T> handleData(type: Types, response: BaseResponse<T>) {
+    private fun <T> handleData(type: String, response: BaseResponse<T>) {
         when (response.status) {
             Status.SUCCESS -> {
                 when (type) {
-                    Types.GENRES -> {
+                    MoviesTypes.GENRES.value -> {
                         _genresResponse.value = response.data as GenresResponse
                         isLoadedGenresResponse = true
                         _isAllLoaded.value = isAllLoaded()
                     }
-                    Types.UPCOMING, Types.TOP_RATED, Types.NOW_PLAYING, Types.POPULAR -> {
-                        _moviesResponse.value = response.data as MoviesResponse
+                    MoviesTypes.UPCOMING.value,
+                    MoviesTypes.POPULAR.value,
+                    MoviesTypes.TOP_RATED.value,
+                    MoviesTypes.NOW_PLAYING.value
+                    -> {
+                        val moviesResponse = response.data as MoviesResponse
+                        _movies.value = moviesResponse.movies
                         isLoadedMoviesResponse = true
-                        _isAllLoaded.value = isAllLoaded()
-                    }
-                    Types.CATEGORIES -> {
-                        _categoriesResponse.value = response.data as List<String>
-                        isLoadedCategoriesResponse = true
                         _isAllLoaded.value = isAllLoaded()
                     }
                 }

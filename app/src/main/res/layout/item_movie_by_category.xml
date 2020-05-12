@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movie"
+            type="com.sunasterisk.moviedb_51.data.model.Movie" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/genreCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_16"
+        app:cardCornerRadius="@dimen/dp_25"
+        app:cardUseCompatPadding="true"
+        tools:cardElevation="@dimen/dp_8">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/itemMovieImageView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:bindImage="@{movie.movieBackdropPath}" />
+
+            <ImageView
+                android:id="@+id/bgImageView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_gradient"
+                app:layout_constraintBottom_toBottomOf="@+id/itemMovieImageView"
+                app:layout_constraintDimensionRatio="h,1"
+                app:layout_constraintStart_toStartOf="@+id/itemMovieImageView"
+                app:layout_constraintTop_toTopOf="@+id/itemMovieImageView" />
+
+            <TextView
+                android:id="@+id/movieTitleTexView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:ellipsize="end"
+                android:fontFamily="@font/ubuntu_bold"
+                android:maxLines="3"
+                android:text="@{movie.movieTitle}"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_20"
+                app:layout_constraintEnd_toEndOf="@+id/bgImageView"
+                app:layout_constraintStart_toStartOf="@+id/bgImageView"
+                app:layout_constraintTop_toTopOf="@+id/bgImageView" />
+
+            <TextView
+                android:id="@+id/movieReleaseDateTexView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:text="@{movie.movieReleaseDate}"
+                android:textColor="@color/colorTextTransparent"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/bgImageView"
+                app:layout_constraintStart_toStartOf="@+id/bgImageView"
+                app:layout_constraintTop_toBottomOf="@+id/movieTitleTexView" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+                app:chipSpacing="@dimen/dp_8"
+                app:chipSurfaceColor="@android:color/transparent"
+                app:items="@{movie.genresId}"
+                app:layout_constraintBottom_toBottomOf="@+id/itemMovieImageView"
+                app:layout_constraintEnd_toEndOf="@+id/itemMovieImageView"
+                app:layout_constraintStart_toStartOf="@+id/itemMovieImageView"
+                app:layout_constraintTop_toBottomOf="@+id/movieReleaseDateTexView"
+                app:layout_constraintVertical_bias="1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

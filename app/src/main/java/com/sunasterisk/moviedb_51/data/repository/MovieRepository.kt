@@ -4,7 +4,6 @@ import com.sunasterisk.moviedb_51.data.source.MovieDataSource
 import com.sunasterisk.moviedb_51.data.source.remote.response.GenresResponse
 import com.sunasterisk.moviedb_51.data.source.remote.response.MoviesResponse
 import com.sunasterisk.moviedb_51.utils.Constant
-import io.reactivex.Flowable
 import io.reactivex.Observable
 
 class MovieRepository private constructor(
@@ -22,10 +21,6 @@ class MovieRepository private constructor(
 
     fun getGenres(): Observable<GenresResponse> {
         return remote.getGenres()
-    }
-
-    fun getCategories(): Flowable<List<String>> {
-        return local.getCategoriesLocal()
     }
 
     companion object {
