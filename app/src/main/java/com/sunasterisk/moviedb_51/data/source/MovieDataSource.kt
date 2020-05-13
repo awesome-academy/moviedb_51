@@ -1,5 +1,6 @@
 package com.sunasterisk.moviedb_51.data.source
 
+import com.sunasterisk.moviedb_51.data.model.Movie
 import com.sunasterisk.moviedb_51.data.model.MovieRecent
 import com.sunasterisk.moviedb_51.data.source.remote.response.GenresResponse
 import com.sunasterisk.moviedb_51.data.source.remote.response.MoviesResponse
@@ -24,5 +25,6 @@ interface MovieDataSource {
     interface Remote {
         fun getMovies(type: String, query: String?, countPage: Int): Observable<MoviesResponse>
         fun getGenres(): Observable<GenresResponse>
+        fun getMovieDetails(movieId: Int): Observable<Movie>
     }
 }
