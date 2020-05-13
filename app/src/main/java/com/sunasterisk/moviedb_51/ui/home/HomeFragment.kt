@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,16 +16,19 @@ import com.sunasterisk.moviedb_51.R
 import com.sunasterisk.moviedb_51.data.base.ViewModelFactory
 import com.sunasterisk.moviedb_51.data.repository.MovieRepository
 import com.sunasterisk.moviedb_51.data.source.local.MovieLocalDataSource
+import com.sunasterisk.moviedb_51.data.source.local.MoviesDatabase
 import com.sunasterisk.moviedb_51.data.source.remote.MovieRemoteDataSource
 import com.sunasterisk.moviedb_51.data.source.remote.api.MovieFactory
 import com.sunasterisk.moviedb_51.databinding.FragmentHomeBinding
 import com.sunasterisk.moviedb_51.ui.details.MovieDetailsFragment
 import com.sunasterisk.moviedb_51.ui.home.adapter.GenreAdapter
 import com.sunasterisk.moviedb_51.ui.home.adapter.MovieCategoryAdapter
+import com.sunasterisk.moviedb_51.ui.home.adapter.MovieRecentAdapter
 import com.sunasterisk.moviedb_51.ui.movies.MoviesFragment
 import com.sunasterisk.moviedb_51.utils.AnimationTypes
 import com.sunasterisk.moviedb_51.utils.MoviesTypes
 import com.sunasterisk.moviedb_51.utils.addFragment
+import kotlinx.android.synthetic.main.partial_empty_movies.*
 
 class HomeFragment : Fragment(), TabLayout.OnTabSelectedListener,
     SwipeRefreshLayout.OnRefreshListener {
@@ -32,6 +36,7 @@ class HomeFragment : Fragment(), TabLayout.OnTabSelectedListener,
     private lateinit var binding: FragmentHomeBinding
     private val genreAdapter by lazy { GenreAdapter() }
     private val movieCategoryAdapter by lazy { MovieCategoryAdapter() }
+    private val movieRecentAdapter by lazy { MovieRecentAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +44,7 @@ class HomeFragment : Fragment(), TabLayout.OnTabSelectedListener,
             val movieRepository =
                 MovieRepository.getInstance(
                     MovieRemoteDataSource.getInstance(MovieFactory(it).instance),
-                    MovieLocalDataSource.instance
+                    MovieLocalDataSource.getInstance(MoviesDatabase.getInstance(it))
                 )
             viewModel = ViewModelProvider(
                 this,
@@ -89,6 +94,13 @@ class HomeFragment : Fragment(), TabLayout.OnTabSelectedListener,
     }
 
     private fun observeViewModel() = with(viewModel) {
+        showEmptyMovieRecent.observe(viewLifecycleOwner, Observer {
+            binding.layoutEmptyData.isVisible = it
+            if (it) messageEmptyTextView.text = getString(R.string.message_empty_movies_recent)
+        })
+        moviesRecent.observe(viewLifecycleOwner, Observer {
+            movieRecentAdapter.submitList(it)
+        })
         movies.observe(viewLifecycleOwner, Observer(movieCategoryAdapter::submitList))
         genresResponse.observe(viewLifecycleOwner, Observer { genreAdapter.submitList(it.genres) })
         isAllLoaded.observe(viewLifecycleOwner, Observer {
@@ -132,13 +144,18 @@ class HomeFragment : Fragment(), TabLayout.OnTabSelectedListener,
             }
             moviesByCategoryRecyclerView.adapter = movieCategoryAdapter.apply {
                 onItemClick = { movie ->
+                    viewModel.handleAddMovieLocal(movie)
                     val fragment = MovieDetailsFragment.getInstance(movie.movieID, movie.movieTitle)
                     activity?.addFragment(R.id.mainFrameLayout, fragment, AnimationTypes.NONE, true)
                 }
             }
+            movieRecentRecyclerView.adapter = movieRecentAdapter
             categoryTabLayout.addOnTabSelectedListener(this@HomeFragment)
             homeSwipeRefreshLayout.setOnRefreshListener(this@HomeFragment)
             homeSwipeRefreshLayout.setColorSchemeResources(R.color.colorPurpleDark)
+            clearRecentTextView.setOnClickListener {
+                viewModel.deleteAllMoviesLocal()
+            }
         }
         setupTabCategory()
     }
