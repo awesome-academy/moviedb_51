@@ -14,6 +14,7 @@ import com.sunasterisk.moviedb_51.databinding.ItemMovieByCategoryBinding
 
 class MovieCategoryAdapter :
     BaseRecyclerAdapter<Movie, MovieCategoryAdapter.ViewHolder>(MovieDiffUtilCallback()) {
+    var onItemClick: (Movie) -> Unit = { _ -> }
 
     override fun getItemViewType(position: Int) = R.layout.item_movie_by_category
 
@@ -26,12 +27,15 @@ class MovieCategoryAdapter :
                 parent,
                 false
             )
-        return ViewHolder(binding)
+        return ViewHolder(binding, onItemClick)
     }
 
     class ViewHolder(
-        itemView: ViewDataBinding
+        itemView: ViewDataBinding,
+        private val onItemClick: (Movie) -> Unit
     ) : BaseViewHolder<Movie>(itemView) {
+
+        override fun onItemClickListener(itemData: Movie) = onItemClick(itemData)
 
         override fun getVariableID() = BR.movie
     }
