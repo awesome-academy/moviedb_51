@@ -18,10 +18,13 @@ import com.sunasterisk.moviedb_51.data.source.local.MovieLocalDataSource
 import com.sunasterisk.moviedb_51.data.source.remote.MovieRemoteDataSource
 import com.sunasterisk.moviedb_51.data.source.remote.api.MovieFactory
 import com.sunasterisk.moviedb_51.databinding.FragmentHomeBinding
+import com.sunasterisk.moviedb_51.ui.details.MovieDetailsFragment
 import com.sunasterisk.moviedb_51.ui.home.adapter.GenreAdapter
 import com.sunasterisk.moviedb_51.ui.home.adapter.MovieCategoryAdapter
-import com.sunasterisk.moviedb_51.utils.Constant
+import com.sunasterisk.moviedb_51.ui.movies.MoviesFragment
+import com.sunasterisk.moviedb_51.utils.AnimationTypes
 import com.sunasterisk.moviedb_51.utils.MoviesTypes
+import com.sunasterisk.moviedb_51.utils.addFragment
 
 class HomeFragment : Fragment(), TabLayout.OnTabSelectedListener,
     SwipeRefreshLayout.OnRefreshListener {
@@ -117,8 +120,22 @@ class HomeFragment : Fragment(), TabLayout.OnTabSelectedListener,
 
     private fun initView() {
         binding.run {
-            genresRecyclerView.adapter = genreAdapter
-            moviesByCategoryRecyclerView.adapter = movieCategoryAdapter
+            genresRecyclerView.adapter = genreAdapter.apply {
+                onItemClick = { genres ->
+                    val fragment = MoviesFragment.getInstance(
+                        MoviesTypes.GENRES.value,
+                        genres.genresID.toString(),
+                        genres.genresName
+                    )
+                    activity?.addFragment(R.id.mainFrameLayout, fragment, AnimationTypes.NONE, true)
+                }
+            }
+            moviesByCategoryRecyclerView.adapter = movieCategoryAdapter.apply {
+                onItemClick = { movie ->
+                    val fragment = MovieDetailsFragment.getInstance(movie.movieID, movie.movieTitle)
+                    activity?.addFragment(R.id.mainFrameLayout, fragment, AnimationTypes.NONE, true)
+                }
+            }
             categoryTabLayout.addOnTabSelectedListener(this@HomeFragment)
             homeSwipeRefreshLayout.setOnRefreshListener(this@HomeFragment)
             homeSwipeRefreshLayout.setColorSchemeResources(R.color.colorPurpleDark)

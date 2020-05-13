@@ -13,6 +13,7 @@ import com.sunasterisk.moviedb_51.data.model.Genres
 import com.sunasterisk.moviedb_51.databinding.ItemGenreBinding
 
 class GenreAdapter : BaseRecyclerAdapter<Genres, GenreAdapter.ViewHolder>(MovieDiffUtilCallback()) {
+    var onItemClick: (Genres) -> Unit = { _ -> }
 
     override fun getItemViewType(position: Int) = R.layout.item_genre
 
@@ -20,12 +21,15 @@ class GenreAdapter : BaseRecyclerAdapter<Genres, GenreAdapter.ViewHolder>(MovieD
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding =
             DataBindingUtil.inflate<ItemGenreBinding>(layoutInflater, viewType, parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding, onItemClick)
     }
 
     class ViewHolder(
-        itemView: ViewDataBinding
+        itemView: ViewDataBinding,
+        private var onItemClick: (Genres) -> Unit
     ) : BaseViewHolder<Genres>(itemView) {
+
+        override fun onItemClickListener(itemData: Genres) = onItemClick(itemData)
 
         override fun getVariableID() = BR.genre
     }
