@@ -17,4 +17,16 @@
     </style>
 
     <style name="PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/ubuntu_bold</item>
+    </style>
+
+    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textColor">@color/colorPurpleDark</item>
+        <item name="rippleColor">@null</item>
+        <item name="closeIcon">@null</item>
+        <item name="chipBackgroundColor">@android:color/transparent</item>
+    </style>
 </resources>

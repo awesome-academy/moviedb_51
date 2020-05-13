@@ -19,6 +19,8 @@ data class Movie(
     val movieReleaseDate: String,
     @SerializedName("genres")
     val genres: List<Genres>,
+    @SerializedName("genre_ids")
+    val genresId: List<Int>,
     @SerializedName("original_language")
     val movieOriginalLanguage: String
 )

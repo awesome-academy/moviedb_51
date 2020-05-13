@@ -5,4 +5,10 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="colorBlue">#4947A7</color>
     <color name="colorPurpleDark">#605EB8</color>
+    <color name="colorPurpleDark2">#FF6D6BB8</color>
+    <color name="colorOrange">#FFFF7652</color>
+    <color name="colorBlueLight">#EAEAF4</color>
+    <color name="colorTextLight">#EAEAF4</color>
+    <color name="colorTextTransparent">#80EAEAF4</color>
+    <color name="colorBlackTransparent">#B3000000</color>
 </resources>

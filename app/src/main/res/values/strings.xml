@@ -2,5 +2,39 @@
     <string name="app_name">MovieDB</string>
     <string name="title_home">Home</string>
     <string name="title_favorite">Favorite</string>
-    <string name="check_internet_fail">Check internet connection!</string>
+    <string name="title_genres">Genres</string>
+    <string name="title_recent">Recent</string>
+    <string name="message_empty_movies_recent">Empty. You haven\'t watched any recent movies!</string>
+    <string name="title_clear_all_recent">clear all</string>
+    <string name="message_check_internet_fail">Check internet connection!</string>
+    <string name="title_action">Action</string>
+    <string name="title_adventure">Adventure</string>
+    <string name="title_animation">Animation</string>
+    <string name="title_comedy">Comedy</string>
+    <string name="title_crime">Crime</string>
+    <string name="title_documentary">Documentary</string>
+    <string name="title_drama">Drama</string>
+    <string name="title_family">Family</string>
+    <string name="title_fantasy">Fantasy</string>
+    <string name="title_history">History</string>
+    <string name="title_horror">Horror</string>
+    <string name="title_music">Music</string>
+    <string name="title_mystery">Mystery</string>
+    <string name="title_romance">Romance</string>
+    <string name="title_science_fiction">Science Fiction</string>
+    <string name="title_tv_movie">TV Movie</string>
+    <string name="title_thriller">Thriller</string>
+    <string name="title_war">War</string>
+    <string name="title_western">Western</string>
+    <string name="title_none">None</string>
+    <string name="title_popular">POPULAR</string>
+    <string name="title_top_rated">TOP_RATED</string>
+    <string name="title_upcoming">UPCOMING</string>
+    <string name="title_now_playing">NOW_PLAYING</string>
+    <string-array name="categories_array">
+        <item>POPULAR</item>
+        <item>TOP_RATED</item>
+        <item>UPCOMING</item>
+        <item>NOW_PLAYING</item>
+    </string-array>
 </resources>
