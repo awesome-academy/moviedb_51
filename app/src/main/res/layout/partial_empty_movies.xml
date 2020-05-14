@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/ubuntu_bold"
         android:gravity="center"
-        android:text="@string/message_empty_movies_recent"
         android:textColor="@color/colorBlue"
         app:layout_constraintBottom_toTopOf="@+id/EmptyImageView"
         app:layout_constraintEnd_toEndOf="parent"

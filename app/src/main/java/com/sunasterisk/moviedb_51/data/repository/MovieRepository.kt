@@ -1,9 +1,12 @@
 package com.sunasterisk.moviedb_51.data.repository
 
+import com.sunasterisk.moviedb_51.data.model.MovieRecent
 import com.sunasterisk.moviedb_51.data.source.MovieDataSource
 import com.sunasterisk.moviedb_51.data.source.remote.response.GenresResponse
 import com.sunasterisk.moviedb_51.data.source.remote.response.MoviesResponse
 import com.sunasterisk.moviedb_51.utils.Constant
+import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.Observable
 
 class MovieRepository private constructor(
@@ -21,6 +24,22 @@ class MovieRepository private constructor(
 
     fun getGenres(): Observable<GenresResponse> {
         return remote.getGenres()
+    }
+
+    fun addMovieLocal(movie: MovieRecent) {
+        local.addMovieLocal(movie)
+    }
+
+    fun deleteAllMoviesLocal() {
+        local.deleteAllMoviesLocal()
+    }
+
+    fun getAllMoviesLocal(): Flowable<List<MovieRecent>> {
+        return local.getAllMoviesLocal()
+    }
+
+    fun searchMoveLocal(movieId: Int): Maybe<Int> {
+        return local.searchMoveLocal(movieId)
     }
 
     companion object {
