@@ -1,5 +1,6 @@
 package com.sunasterisk.moviedb_51.data.repository
 
+import com.sunasterisk.moviedb_51.data.model.Movie
 import com.sunasterisk.moviedb_51.data.model.MovieRecent
 import com.sunasterisk.moviedb_51.data.source.MovieDataSource
 import com.sunasterisk.moviedb_51.data.source.remote.response.GenresResponse
@@ -40,6 +41,10 @@ class MovieRepository private constructor(
 
     fun searchMoveLocal(movieId: Int): Maybe<Int> {
         return local.searchMoveLocal(movieId)
+    }
+
+    fun getMovieDetails(movieId: Int): Observable<Movie> {
+        return remote.getMovieDetails(movieId)
     }
 
     companion object {

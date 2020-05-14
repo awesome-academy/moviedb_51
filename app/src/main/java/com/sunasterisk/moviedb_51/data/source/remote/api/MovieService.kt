@@ -1,5 +1,6 @@
 package com.sunasterisk.moviedb_51.data.source.remote.api
 
+import com.sunasterisk.moviedb_51.data.model.Movie
 import com.sunasterisk.moviedb_51.data.source.remote.response.GenresResponse
 import com.sunasterisk.moviedb_51.data.source.remote.response.MoviesResponse
 import com.sunasterisk.moviedb_51.utils.Constant
@@ -19,4 +20,10 @@ interface MovieService {
         @Query("page") countPage: Int,
         @Query("language") language: String = Constant.BASE_LANGUAGE
     ): Observable<MoviesResponse>
+
+    @GET("movie/{movieId}?append_to_response=credits,videos")
+    fun getMovieDetails(
+        @Path("movieId") movieId: Int,
+        @Query("language") language: String = Constant.BASE_LANGUAGE
+    ): Observable<Movie>
 }

@@ -22,5 +22,11 @@ data class Movie(
     @SerializedName("genre_ids")
     val genresId: List<Int>,
     @SerializedName("original_language")
-    val movieOriginalLanguage: String
+    val movieOriginalLanguage: String,
+    @SerializedName("production_companies")
+    val producer: List<Producer>,
+    @SerializedName("credits")
+    val casts: Casts,
+    @SerializedName("videos")
+    val trailers: MovieTrailers
 )
