@@ -1,7 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.sunasterisk.moviedb_51.ui.details.MovieDetailsViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/moviePosterCardView"
+                android:layout_width="@dimen/dp_150"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                app:cardCornerRadius="@dimen/dp_25"
+                app:layout_constraintDimensionRatio="w,1.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/moviePosterImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorBlueLight"
+                    android:scaleType="centerCrop"
+                    app:bindImage="@{viewModel.dataResponse.moviePosterPath}" />
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/releaseDateImageView"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:background="@drawable/ic_release_date"
+                app:layout_constraintBottom_toTopOf="@+id/voteRatingBar"
+                app:layout_constraintStart_toEndOf="@+id/moviePosterCardView" />
+
+            <TextView
+                android:id="@+id/releaseDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:text="@{viewModel.dataResponse.movieReleaseDate}"
+                android:textColor="@color/colorBlue"
+                app:layout_constraintBottom_toBottomOf="@+id/releaseDateImageView"
+                app:layout_constraintStart_toEndOf="@+id/releaseDateImageView"
+                app:layout_constraintTop_toTopOf="@+id/releaseDateImageView" />
+
+            <ImageView
+                android:id="@+id/languageImageView"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:background="@drawable/ic_language"
+                app:layout_constraintBottom_toTopOf="@+id/releaseDateImageView"
+                app:layout_constraintStart_toEndOf="@+id/moviePosterCardView" />
+
+            <TextView
+                android:id="@+id/languageTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:text="@{viewModel.dataResponse.movieOriginalLanguage}"
+                android:textColor="@color/colorBlue"
+                app:layout_constraintBottom_toBottomOf="@+id/languageImageView"
+                app:layout_constraintStart_toEndOf="@+id/languageImageView"
+                app:layout_constraintTop_toTopOf="@+id/languageImageView" />
+
+            <RatingBar
+                android:id="@+id/voteRatingBar"
+                style="?attr/ratingBarStyleIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:numStars="5"
+                android:progressBackgroundTint="@color/colorOrange"
+                android:progressTint="@color/colorOrange"
+                android:rating="@{(float)viewModel.dataResponse.movieVoteAverage/2}"
+                android:secondaryProgressTint="@color/colorOrange"
+                android:stepSize="0.1"
+                app:layout_constraintBottom_toBottomOf="@+id/moviePosterCardView"
+                app:layout_constraintStart_toEndOf="@+id/moviePosterCardView" />
+
+            <TextView
+                android:id="@+id/titleOverViewTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_25"
+                android:fontFamily="@font/ubuntu_bold"
+                android:text="@string/title_overview"
+                android:textColor="@color/colorBlue"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/moviePosterCardView" />
+
+            <TextView
+                android:id="@+id/movieOverviewTexView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:background="@drawable/bg_overview"
+                android:padding="@dimen/dp_16"
+                android:text="@{viewModel.dataResponse.movieOverView}"
+                android:textColor="@color/colorBlue"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintBottom_toTopOf="@+id/titleGenresTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleOverViewTextView" />
+
+            <TextView
+                android:id="@+id/titleGenresTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_25"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:fontFamily="@font/ubuntu_bold"
+                android:text="@string/title_genres"
+                android:textColor="@color/colorBlue"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintBottom_toTopOf="@+id/genresChipGroup"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/movieOverviewTexView" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/genresChipGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+                app:chipSpacing="@dimen/dp_8"
+                app:chipSurfaceColor="@color/colorOrange"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
