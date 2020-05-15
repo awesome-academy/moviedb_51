@@ -27,14 +27,19 @@
     <string name="title_war">War</string>
     <string name="title_western">Western</string>
     <string name="title_none">None</string>
-    <string name="title_popular">POPULAR</string>
-    <string name="title_top_rated">TOP_RATED</string>
-    <string name="title_upcoming">UPCOMING</string>
-    <string name="title_now_playing">NOW_PLAYING</string>
+    <string name="title_popular">Popular</string>
+    <string name="title_top_rated">Top rated</string>
+    <string name="title_upcoming">Upcoming</string>
+    <string name="title_now_playing">Now playing</string>
     <string-array name="categories_array">
-        <item>POPULAR</item>
-        <item>TOP_RATED</item>
-        <item>UPCOMING</item>
-        <item>NOW_PLAYING</item>
+        <item>Popular</item>
+        <item>Top rated</item>
+        <item>Upcoming</item>
+        <item>Now playing</item>
+    </string-array>
+    <string-array name="movie_details_categories_array">
+        <item>Information</item>
+        <item>Cast</item>
+        <item>Production Companies</item>
     </string-array>
 </resources>

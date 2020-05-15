@@ -8,4 +8,5 @@
     <dimen name="sp_18">18sp</dimen>
     <dimen name="sp_20">20sp</dimen>
     <dimen name="dp_170">170dp</dimen>
+    <dimen name="dp_285">285dp</dimen>
 </resources>
