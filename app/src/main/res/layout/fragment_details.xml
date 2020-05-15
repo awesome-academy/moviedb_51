@@ -21,7 +21,9 @@
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.AppBarLayout
+            app:setCollapsingToolbar="@{detailsCollapsingToolbar}"
             android:id="@+id/appbar"
+            app:setTitle="@{viewModel.dataResponse.movieTitle}"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_285"
             android:fitsSystemWindows="true"
@@ -89,7 +91,7 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/bg_content_details"
@@ -97,39 +99,35 @@
             app:behavior_overlapTop="?attr/actionBarSize"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/categoryDetailsTabLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="@android:color/transparent"
+                app:layout_constraintDimensionRatio="W,0.1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tabBackground="@drawable/select_tab_category"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"
+                app:tabMode="scrollable"
+                app:tabSelectedTextColor="@android:color/white"
+                app:tabTextAppearance="@style/TabLayoutTextStyle"
+                app:tabTextColor="@color/colorTextLight" />
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/categoryDetailsTabLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="@dimen/dp_16"
-                    android:layout_marginTop="@dimen/dp_16"
-                    android:background="@android:color/transparent"
-                    app:layout_constraintDimensionRatio="W,0.1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tabBackground="@drawable/select_tab_category"
-                    app:tabGravity="center"
-                    app:tabIndicatorHeight="0dp"
-                    app:tabMode="scrollable"
-                    app:tabSelectedTextColor="@android:color/white"
-                    app:tabTextAppearance="@style/TabLayoutTextStyle"
-                    app:tabTextColor="@color/colorTextLight" />
-
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/movieDetailsViewPaper"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/categoryDetailsTabLayout" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/movieDetailsViewPaper"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/categoryDetailsTabLayout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ProgressBar
             android:id="@+id/detailsProgressBar"

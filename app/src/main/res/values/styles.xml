@@ -29,4 +29,12 @@
         <item name="closeIcon">@null</item>
         <item name="chipBackgroundColor">@android:color/transparent</item>
     </style>
+
+    <style name="ChipStyleDetails" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textColor">@color/colorPurpleDark</item>
+        <item name="rippleColor">@null</item>
+        <item name="closeIcon">@null</item>
+        <item name="android:fontFamily">@font/ubuntu_bold</item>
+        <item name="chipBackgroundColor">@color/colorBlueLight</item>
+    </style>
 </resources>

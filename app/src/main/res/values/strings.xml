@@ -31,6 +31,7 @@
     <string name="title_top_rated">Top rated</string>
     <string name="title_upcoming">Upcoming</string>
     <string name="title_now_playing">Now playing</string>
+    <string name="title_overview">Overview</string>
     <string-array name="categories_array">
         <item>Popular</item>
         <item>Top rated</item>

@@ -21,6 +21,8 @@ class InformationFragment : Fragment() {
     ): View? {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_information, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this.viewLifecycleOwner
         return binding.root
     }
 

@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.sunasterisk.moviedb_51.R
@@ -40,6 +42,10 @@ fun ImageView.bindImageGenres(genres: Int?) {
 
 @BindingAdapter("bindImage")
 fun ImageView.loadImageUrl(imagePath: String?) {
+    if (imagePath.isNullOrEmpty()) {
+        setImageResource(R.drawable.ic_no_image)
+        return
+    }
     Glide.with(context)
         .load(Constant.BASE_URL_IMAGE + imagePath)
         .placeholder(R.drawable.ic_no_image)
@@ -79,4 +85,26 @@ fun ChipGroup.setItems(genreIds: List<Int>?) {
             addView(genresChip)
         }
     }
+}
+
+@BindingAdapter("setCollapsingToolbar", "setTitle")
+fun AppBarLayout.handleCollapsedToolbarTitle(
+    collapsingToolbar: CollapsingToolbarLayout?,
+    title: String?
+) {
+    addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+        var isShow = true
+        var scrollRange = -1
+        override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
+            if (scrollRange == -1) scrollRange = appBarLayout.totalScrollRange
+            if (scrollRange + verticalOffset == 0) {
+                collapsingToolbar?.title =
+                    title
+                isShow = true
+            } else if (isShow) {
+                collapsingToolbar?.title = ""
+                isShow = false
+            }
+        }
+    })
 }

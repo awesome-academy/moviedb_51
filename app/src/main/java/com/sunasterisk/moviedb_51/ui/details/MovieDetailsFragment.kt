@@ -8,11 +8,8 @@ import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.sunasterisk.moviedb_51.R
 import com.sunasterisk.moviedb_51.data.base.ViewModelFactory
-import com.sunasterisk.moviedb_51.data.model.Movie
 import com.sunasterisk.moviedb_51.data.repository.MovieRepository
 import com.sunasterisk.moviedb_51.data.source.local.MovieLocalDataSource
 import com.sunasterisk.moviedb_51.data.source.local.MoviesDatabase
@@ -20,9 +17,6 @@ import com.sunasterisk.moviedb_51.data.source.remote.MovieRemoteDataSource
 import com.sunasterisk.moviedb_51.data.source.remote.api.MovieFactory
 import com.sunasterisk.moviedb_51.databinding.FragmentDetailsBinding
 import com.sunasterisk.moviedb_51.ui.details.adapter.MovieDetailsViewPagerAdapter
-import com.sunasterisk.moviedb_51.ui.details.casts.CastsFragment
-import com.sunasterisk.moviedb_51.ui.details.information.InformationFragment
-import com.sunasterisk.moviedb_51.ui.details.producer.ProducerFragment
 import com.sunasterisk.moviedb_51.ui.main.MainActivity
 
 class MovieDetailsFragment : Fragment() {
@@ -63,19 +57,8 @@ class MovieDetailsFragment : Fragment() {
 
     private fun initViewPaper() {
         activity?.run {
-            val categories = resources.getStringArray(R.array.movie_details_categories_array)
-            val viewPaperAdapter = MovieDetailsViewPagerAdapter(categories, supportFragmentManager)
-            if (viewPaperAdapter.count == 0) {
-                val informationFragment = InformationFragment.getInstance()
-                val castsFragment = CastsFragment.getInstance()
-                val producerFragment = ProducerFragment.getInstance()
-                informationFragment.setViewModel(viewModel)
-                castsFragment.setViewModel(viewModel)
-                producerFragment.setViewModel(viewModel)
-                viewPaperAdapter.addFragment(informationFragment)
-                viewPaperAdapter.addFragment(castsFragment)
-                viewPaperAdapter.addFragment(producerFragment)
-            }
+            val viewPaperAdapter =
+                MovieDetailsViewPagerAdapter(this, viewModel, supportFragmentManager)
             binding.movieDetailsViewPaper.adapter = viewPaperAdapter
             binding.categoryDetailsTabLayout.setupWithViewPager(binding.movieDetailsViewPaper)
             setupTabCategory()
@@ -87,7 +70,6 @@ class MovieDetailsFragment : Fragment() {
             setSupportActionBar(binding.toolbar)
             supportActionBar?.run {
                 setDisplayShowTitleEnabled(true)
-                handleCollapsedToolbarTitle()
                 title = arguments?.getString(ARGUMENT_MOVIE_TITLE)
             }
             binding.toolbar.setNavigationOnClickListener {
@@ -105,26 +87,6 @@ class MovieDetailsFragment : Fragment() {
             params.setMargins(0, 0, 50, 0)
             tab.requestLayout()
         }
-    }
-
-    private fun handleCollapsedToolbarTitle() {
-        binding.appbar.addOnOffsetChangedListener(object : OnOffsetChangedListener {
-            var isShow = true
-            var scrollRange = -1
-            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.totalScrollRange
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    binding.detailsCollapsingToolbar.title =
-                        arguments?.getString(ARGUMENT_MOVIE_TITLE)
-                    isShow = true
-                } else if (isShow) {
-                    binding.detailsCollapsingToolbar.title = ""
-                    isShow = false
-                }
-            }
-        })
     }
 
     companion object {
