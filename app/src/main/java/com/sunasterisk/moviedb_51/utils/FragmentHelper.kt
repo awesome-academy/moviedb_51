@@ -2,6 +2,7 @@ package com.sunasterisk.moviedb_51.utils
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentTransaction
 import com.sunasterisk.moviedb_51.R
 
 fun FragmentActivity.addFragment(
@@ -24,6 +25,9 @@ fun FragmentActivity.addFragment(
             R.anim.right_to_left,
             R.anim.exit_right_to_left
         )
+        AnimationTypes.OPEN -> {
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        }
         AnimationTypes.NONE -> {
         }
     }
