@@ -11,6 +11,7 @@ import com.sunasterisk.moviedb_51.base.BaseRecyclerAdapter
 import com.sunasterisk.moviedb_51.base.BaseViewHolder
 import com.sunasterisk.moviedb_51.data.model.MovieRecent
 import com.sunasterisk.moviedb_51.databinding.ItemMovieRecentBinding
+import kotlinx.android.synthetic.main.item_movie_recent.view.*
 
 class MovieRecentAdapter :
     BaseRecyclerAdapter<MovieRecent, MovieRecentAdapter.ViewHolder>(MovieDiffUtilCallback()) {
@@ -30,7 +31,12 @@ class MovieRecentAdapter :
         private val onItemClick: (MovieRecent) -> Unit
     ) : BaseViewHolder<MovieRecent>(itemView) {
 
-        override fun onItemClickListener(itemData: MovieRecent) = onItemClick(itemData)
+        override fun onBindData(itemData: MovieRecent) {
+            super.onBindData(itemData)
+            itemView.movieRecentCardView.setOnClickListener {
+                onItemClick(itemData)
+            }
+        }
 
         override fun getVariableID() = BR.movieRecent
     }

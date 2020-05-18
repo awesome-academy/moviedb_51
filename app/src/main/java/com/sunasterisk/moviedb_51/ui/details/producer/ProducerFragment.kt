@@ -13,7 +13,11 @@ import com.sunasterisk.moviedb_51.databinding.FragmentProducerBinding
 import com.sunasterisk.moviedb_51.ui.details.MovieDetailsFragment
 import com.sunasterisk.moviedb_51.ui.details.MovieDetailsViewModel
 import com.sunasterisk.moviedb_51.ui.details.producer.adapter.ProducerAdapter
+import com.sunasterisk.moviedb_51.ui.movies.MoviesFragment
+import com.sunasterisk.moviedb_51.utils.AnimationTypes
 import com.sunasterisk.moviedb_51.utils.ItemOffsetDecoration
+import com.sunasterisk.moviedb_51.utils.MoviesTypes
+import com.sunasterisk.moviedb_51.utils.addFragment
 
 class ProducerFragment : Fragment() {
     private lateinit var binding: FragmentProducerBinding
@@ -49,8 +53,18 @@ class ProducerFragment : Fragment() {
             ItemOffsetDecoration(resources.getDimensionPixelOffset(R.dimen.dp_8))
         binding.producerRecyclerView.addItemDecoration(itemDecoration)
         binding.producerRecyclerView.adapter = producerAdapter.apply {
-            onItemClick = { _ ->
-                //TODO switch to the movies screen by cast id
+            onItemClick = { producer ->
+                val fragment = MoviesFragment.getInstance(
+                    MoviesTypes.PRODUCER.value,
+                    producer.produceID.toString(),
+                    producer.produceName
+                )
+                activity?.addFragment(
+                    R.id.mainFrameLayout,
+                    fragment,
+                    AnimationTypes.RIGHT_TO_LEFT,
+                    true
+                )
             }
         }
     }
