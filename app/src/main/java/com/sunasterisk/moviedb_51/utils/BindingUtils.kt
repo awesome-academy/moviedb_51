@@ -3,12 +3,20 @@ package com.sunasterisk.moviedb_51.utils
 import android.view.LayoutInflater
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.sunasterisk.moviedb_51.R
+import com.sunasterisk.moviedb_51.data.model.CastAttribute
+import com.sunasterisk.moviedb_51.data.model.Genres
+import com.sunasterisk.moviedb_51.data.model.Producer
+import com.sunasterisk.moviedb_51.ui.details.MovieDetailsFragment.Companion.COUNT_SPAN
+import com.sunasterisk.moviedb_51.ui.details.casts.adapter.CastAdapter
+import com.sunasterisk.moviedb_51.ui.details.producer.adapter.ProducerAdapter
 import com.sunasterisk.moviedb_51.ui.home.HomeFragment.Companion.COUNT_CHIP_HOME
 
 @BindingAdapter("bindImageGenres")
@@ -107,4 +115,18 @@ fun AppBarLayout.handleCollapsedToolbarTitle(
             }
         }
     })
+}
+
+@BindingAdapter("itemGenreDetails")
+fun ChipGroup.setItemGenreDetails(genres: List<Genres>?) {
+    genres ?: return
+    for (item in genres) {
+        val genresChip = LayoutInflater.from(context)
+            .inflate(R.layout.item_chip_details, this, false) as Chip
+        genresChip.run {
+            id = item.genresID
+            text = item.genresName
+        }
+        addView(genresChip)
+    }
 }

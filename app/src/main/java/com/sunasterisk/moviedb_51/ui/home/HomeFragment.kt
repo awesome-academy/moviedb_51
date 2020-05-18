@@ -146,10 +146,18 @@ class HomeFragment : Fragment(), TabLayout.OnTabSelectedListener,
                 onItemClick = { movie ->
                     viewModel.handleAddMovieLocal(movie)
                     val fragment = MovieDetailsFragment.getInstance(movie.movieID, movie.movieTitle)
-                    activity?.addFragment(R.id.mainFrameLayout, fragment, AnimationTypes.NONE, true)
+                    activity?.addFragment(R.id.mainFrameLayout, fragment, AnimationTypes.OPEN, true)
                 }
             }
-            movieRecentRecyclerView.adapter = movieRecentAdapter
+            movieRecentRecyclerView.adapter = movieRecentAdapter.apply {
+                onItemClick = { movieRecent ->
+                    val fragment = MovieDetailsFragment.getInstance(
+                        movieRecent.movieID,
+                        movieRecent.movieTitle
+                    )
+                    activity?.addFragment(R.id.mainFrameLayout, fragment, AnimationTypes.OPEN, true)
+                }
+            }
             categoryTabLayout.addOnTabSelectedListener(this@HomeFragment)
             homeSwipeRefreshLayout.setOnRefreshListener(this@HomeFragment)
             homeSwipeRefreshLayout.setColorSchemeResources(R.color.colorPurpleDark)
