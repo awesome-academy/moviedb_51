@@ -26,4 +26,32 @@ interface MovieService {
         @Path("movieId") movieId: Int,
         @Query("language") language: String = Constant.BASE_LANGUAGE
     ): Observable<Movie>
+
+    @GET("discover/movie")
+    fun getMoviesByGenresID(
+        @Query("with_genres") query: String,
+        @Query("page") page: Int,
+        @Query("language") language: String = Constant.BASE_LANGUAGE
+    ): Observable<MoviesResponse>
+
+    @GET("discover/movie")
+    fun getMoviesCastID(
+        @Query("with_cast") query: String,
+        @Query("page") page: Int,
+        @Query("language") language: String = Constant.BASE_LANGUAGE
+    ): Observable<MoviesResponse>
+
+    @GET("discover/movie")
+    fun getMoviesByProduceID(
+        @Query("with_companies") query: String,
+        @Query("page") page: Int,
+        @Query("language") language: String = Constant.BASE_LANGUAGE
+    ): Observable<MoviesResponse>
+
+    @GET("search/movie")
+    fun getMoviesByQuery(
+        @Query("query") query: String,
+        @Query("page") page: Int,
+        @Query("language") language: String = Constant.BASE_LANGUAGE
+    ): Observable<MoviesResponse>
 }
