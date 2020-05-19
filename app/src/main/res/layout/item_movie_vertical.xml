@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="movie"
+            type="com.sunasterisk.moviedb_51.data.model.Movie" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/posterCardView"
+            android:layout_width="@dimen/dp_130"
+            android:layout_height="0dp"
+            app:cardCornerRadius="@dimen/dp_25"
+            app:cardElevation="@dimen/dp_4"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintDimensionRatio="W,1.3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/posterImageView"
+                bindImage="@{movie.moviePosterPath}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardCornerRadius="@dimen/dp_25"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintDimensionRatio="W,0.4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/verticalGuideline"
+            app:layout_constraintTop_toTopOf="@id/horizontalGuideline">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:padding="@dimen/dp_4">
+
+                <TextView
+                    android:id="@+id/titleTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@{movie.movieTitle}"
+                    android:textColor="@color/colorBlue"
+                    android:textSize="@dimen/sp_18"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/verticalTwoGuideline"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/voteImageView"
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
+                    android:background="@drawable/ic_star"
+                    app:layout_constraintStart_toEndOf="@id/verticalTwoGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+
+                <TextView
+                    android:id="@+id/voteTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/title_vote(movie.movieVoteAverage)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/voteImageView"
+                    app:layout_constraintStart_toEndOf="@id/voteImageView"
+                    app:layout_constraintTop_toTopOf="@+id/voteImageView" />
+
+                <TextView
+                    android:id="@+id/releaseDateTexView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlue"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/verticalTwoGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/voteTextView" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/genresChipGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+                    app:chipSpacing="@dimen/dp_8"
+                    app:chipSurfaceColor="@android:color/transparent"
+                    app:itemsGenreMovies="@{movie.genresId}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/verticalTwoGuideline"
+                    app:layout_constraintVertical_bias="1" />
+
+                <TextView
+                    android:id="@+id/overviewTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/verticalTwoGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/releaseDateTexView" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/verticalTwoGuideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.3" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/verticalGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontalGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

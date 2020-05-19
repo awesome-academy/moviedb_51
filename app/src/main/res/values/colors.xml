@@ -10,6 +10,7 @@
     <color name="colorOrange2">#FA8364</color>
     <color name="colorBlueLight">#EAEAF4</color>
     <color name="colorTextLight">#EAEAF4</color>
+    <color name="colorBackground">#F9FAFC</color>
     <color name="colorTextTransparent">#80EAEAF4</color>
     <color name="colorBlackTransparent">#B3000000</color>
 </resources>

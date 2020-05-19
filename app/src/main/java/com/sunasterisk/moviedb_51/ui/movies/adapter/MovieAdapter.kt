@@ -1,0 +1,50 @@
+package com.sunasterisk.moviedb_51.ui.movies.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
+import com.sunasterisk.moviedb_51.BR
+import com.sunasterisk.moviedb_51.R
+import com.sunasterisk.moviedb_51.base.BaseRecyclerAdapter
+import com.sunasterisk.moviedb_51.base.BaseViewHolder
+import com.sunasterisk.moviedb_51.data.model.Movie
+import com.sunasterisk.moviedb_51.databinding.ItemMovieVerticalBinding
+
+class MovieAdapter :
+    BaseRecyclerAdapter<Movie, MovieAdapter.ViewHolder>(MovieDiffUtilCallback()) {
+    var onItemClick: (Movie) -> Unit = { _ -> }
+
+    override fun getItemViewType(position: Int) = R.layout.item_movie_vertical
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding =
+            DataBindingUtil.inflate<ItemMovieVerticalBinding>(
+                layoutInflater,
+                viewType,
+                parent,
+                false
+            )
+        return ViewHolder(binding, onItemClick)
+    }
+
+    class ViewHolder(
+        itemView: ViewDataBinding,
+        private val onItemClick: (Movie) -> Unit
+    ) : BaseViewHolder<Movie>(itemView) {
+
+        override fun onItemClickListener(itemData: Movie) = onItemClick(itemData)
+
+        override fun getVariableID() = BR.movie
+    }
+
+    class MovieDiffUtilCallback : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+            oldItem.movieID == newItem.movieID
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+            oldItem == newItem
+    }
+}
