@@ -139,7 +139,7 @@ class HomeFragment : Fragment(), TabLayout.OnTabSelectedListener,
                         genres.genresID.toString(),
                         genres.genresName
                     )
-                    activity?.addFragment(R.id.mainFrameLayout, fragment, AnimationTypes.NONE, true)
+                    activity?.addFragment(R.id.mainFrameLayout, fragment, AnimationTypes.RIGHT_TO_LEFT, true)
                 }
             }
             moviesByCategoryRecyclerView.adapter = movieCategoryAdapter.apply {

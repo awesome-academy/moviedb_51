@@ -13,7 +13,11 @@ import com.sunasterisk.moviedb_51.databinding.FragmentCastsBinding
 import com.sunasterisk.moviedb_51.ui.details.MovieDetailsFragment
 import com.sunasterisk.moviedb_51.ui.details.MovieDetailsViewModel
 import com.sunasterisk.moviedb_51.ui.details.casts.adapter.CastAdapter
+import com.sunasterisk.moviedb_51.ui.movies.MoviesFragment
+import com.sunasterisk.moviedb_51.utils.AnimationTypes
 import com.sunasterisk.moviedb_51.utils.ItemOffsetDecoration
+import com.sunasterisk.moviedb_51.utils.MoviesTypes
+import com.sunasterisk.moviedb_51.utils.addFragment
 
 class CastsFragment : Fragment() {
     private lateinit var binding: FragmentCastsBinding
@@ -49,8 +53,18 @@ class CastsFragment : Fragment() {
             ItemOffsetDecoration(resources.getDimensionPixelOffset(R.dimen.dp_8))
         binding.castsRecyclerView.addItemDecoration(itemDecoration)
         binding.castsRecyclerView.adapter = castAdapter.apply {
-            onItemClick = { _ ->
-                //TODO switch to the movies screen by cast id
+            onItemClick = { castAttribute ->
+                val fragment = MoviesFragment.getInstance(
+                    MoviesTypes.CAST.value,
+                    castAttribute.castId.toString(),
+                    castAttribute.castName
+                )
+                activity?.addFragment(
+                    R.id.mainFrameLayout,
+                    fragment,
+                    AnimationTypes.RIGHT_TO_LEFT,
+                    true
+                )
             }
         }
     }
