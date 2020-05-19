@@ -5,6 +5,7 @@ import com.sunasterisk.moviedb_51.data.source.MovieDataSource
 import com.sunasterisk.moviedb_51.data.source.remote.api.MovieService
 import com.sunasterisk.moviedb_51.data.source.remote.response.GenresResponse
 import com.sunasterisk.moviedb_51.data.source.remote.response.MoviesResponse
+import com.sunasterisk.moviedb_51.utils.MoviesTypes
 import io.reactivex.Observable
 
 class MovieRemoteDataSource private constructor(private val movieService: MovieService) :
@@ -15,7 +16,13 @@ class MovieRemoteDataSource private constructor(private val movieService: MovieS
         query: String?,
         countPage: Int
     ): Observable<MoviesResponse> {
-        return movieService.getMoviesByCategory(type, countPage)
+        return if (query.isNullOrEmpty()) movieService.getMoviesByCategory(type, countPage)
+        else when (type) {
+            MoviesTypes.GENRES.value -> movieService.getMoviesByGenresID(query, countPage)
+            MoviesTypes.CAST.value -> movieService.getMoviesCastID(query, countPage)
+            MoviesTypes.PRODUCER.value -> movieService.getMoviesByProduceID(query, countPage)
+            else -> movieService.getMoviesByQuery(query, countPage)
+        }
     }
 
     override fun getGenres(): Observable<GenresResponse> {
