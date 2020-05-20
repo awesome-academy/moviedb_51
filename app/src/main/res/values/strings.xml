@@ -5,6 +5,7 @@
     <string name="title_genres">Genres</string>
     <string name="title_recent">Recent</string>
     <string name="message_empty_movies_recent">Empty. You haven\'t watched any recent movies!</string>
+    <string name="message_empty_movies">Empty. Not found movie!</string>
     <string name="title_clear_all_recent">clear all</string>
     <string name="message_check_internet_fail">Check internet connection!</string>
     <string name="title_action">Action</string>
@@ -32,6 +33,7 @@
     <string name="title_upcoming">Upcoming</string>
     <string name="title_now_playing">Now playing</string>
     <string name="title_overview">Overview</string>
+    <string name="title_vote">%1$s/10 IMDBL</string>
     <string-array name="categories_array">
         <item>Popular</item>
         <item>Top rated</item>
